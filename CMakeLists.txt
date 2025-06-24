@@ -30,6 +30,20 @@ include(pico_sdk_import.cmake)
 
 project(FreeRTOS-Reborn C CXX ASM)
 
+# --- Patro: FetchContent (PatroLibs) ---
+
+include(FetchContent)
+
+FetchContent_Declare(
+  bitdoglibs
+  GIT_REPOSITORY https://github.com/luisfpatrocinio/bitdog-patroLibs.git
+  GIT_TAG main
+)
+
+FetchContent_MakeAvailable(bitdoglibs)
+
+# --- Fim do FetchContent
+
 # --- Patro: Configuração e Inclusão do FreeRTOS ---
 
 # 1. Verifica se a variável de ambiente existe para evitar erros
@@ -67,6 +81,9 @@ target_link_libraries(FreeRTOS-Reborn PRIVATE
     # Bibliotecas do FreeRTOS definidas pelo script de importação
     FreeRTOS-Kernel
     FreeRTOS-Kernel-Heap4
+
+    # Biblioteca externa via FetchContent
+    bitdog::patrolibs
 )
 
 # Add the standard include files to the build
